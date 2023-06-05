@@ -50,6 +50,11 @@ try {
 	catch(DomainException e ) {
 		System.out.println("Error in reservetion: " + e.getMessage()); 
 	}
+
+	// pega outras excecoes sem quebrar o programa.
+	catch (RuntimeException e) {
+		System.out.println("Unexpeted error");
+	}
 	
 	sc.close();
 	

@@ -1,6 +1,6 @@
 package model.exceptions;
 
-public class DomainException extends Exception {
+public class DomainException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 // RuntimeException - compilador nao obriga a tratar
 //Exception compilador obriga a tratar
