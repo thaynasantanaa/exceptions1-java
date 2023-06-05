@@ -6,13 +6,16 @@ import java.util.Date;
 import java.util.Scanner;
 
 import model.entities.Reservation;
+import model.exceptions.DomainException;
 
 public class Program {
 
-	public static void main(String[] args) throws ParseException { //digo que meu metodo main n tem que tratar essa excecao. PROPAGA A EXCEÇÃO (THROWS)
+	public static void main(String[] args) { //digo que meu metodo main n tem que tratar essa excecao. PROPAGA A EXCEÇÃO (THROWS)
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
 		
+		
+try {
 		System.out.println("Room number:  ");
 		int number = sc.nextInt();
 		System.out.println("Check-in date (dd/MM/yyyy)");
@@ -20,12 +23,10 @@ public class Program {
 		System.out.println("Check-out date (dd/MM/yyyy)");
 		Date checkOut= sdf.parse(sc.next());
 		
-		if (!checkOut.after(checkIn)) {//se checkout n for dps do check in, faça:
-			System.out.println("Error in reservation: Check-out date must be after check-in date");
-		}
-		else {
-			Reservation reservation = new Reservation(number, checkIn, checkOut);
-			System.out.println("Reservation:  " + reservation);
+			
+	
+		Reservation reservation = new Reservation(number, checkIn, checkOut);
+		System.out.println("Reservation:  " + reservation);
 		
 		
 		System.out.println();
@@ -34,36 +35,30 @@ public class Program {
 		System.out.println("Check-in date (dd/MM/yyyy)");
 		checkIn = sdf.parse(sc.next());
 		System.out.println("Check-out date (dd/MM/yyyy)");
-		checkOut= sdf.parse(sc.next());
+		checkOut= sdf.parse(sc.next());	
 		
-		
-		Date now = new Date(); // SOLUÇÃO MTO RUIM.
-		
-		if (checkIn.before(now) || checkOut.before(now)){
-			System.out.println("Error in reservation: Reservation dates for update must be future dates");
-		}
-		else if (!checkOut.after(checkIn)) {
-			System.out.println("Error in reservation: Check-out date must be after check-in date");
-
-			
-		}
-		else {
+	
 		
 		reservation.updateDates(checkIn, checkOut);
-		
-		System.out.println("Reservation:  " + reservation);
-
-		
-		
-		}
-		
-		
-		
-		
-		
-		sc.close();
-		
-		
-		
-	} }}
 	
+		System.out.println("Reservation: " + reservation);
+	
+	}
+	catch(ParseException e) {
+		System.out.println("Invalid date format");
+	}
+	catch(DomainException e ) {
+		System.out.println("Error in reservetion: " + e.getMessage()); 
+	}
+	
+	sc.close();
+	
+
+	
+	}	
+	
+	
+	
+	
+ }
+
